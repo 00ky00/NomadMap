@@ -41,6 +41,6 @@ const center = ref([43.068694925387184, 141.35103808373117])
 <style>
 .map-container {
   height: 800px;
-  width: 1200px;
+  width: 100%;
 }
 </style>
