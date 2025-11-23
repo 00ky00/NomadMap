@@ -1,14 +1,12 @@
 <template>
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-    <form class="d-flex" role="search" @submit.prevent>
+    <p class="text-start">キーワード検索</p>
       <input
         class="form-control me-2"
         type="search"
-        placeholder="Search"
         aria-label="Search"
         v-model="search"
       >
-    </form>
     <div
       class="list-group list-group-flush border-bottom scrollarea"
       v-for="feature in filteredFeatures"
@@ -52,7 +50,9 @@ const props = defineProps({
 })
 
 const search = ref('')
+const mapRef = ref(null) 
 
+//検索フィルタリング機能
 const filteredFeatures = computed(() => {
   if (!search.value) return props.features
   const keyword = search.value.toLowerCase() //小文字変換
@@ -65,8 +65,13 @@ const filteredFeatures = computed(() => {
 const zoom = ref(13)
 const center = ref([43.068694925387184, 141.35103808373117])
 
+
 function setCenter(lat, lng) {
   center.value = [lat, lng]
+  // Leafletインスタンスが取得できていれば強制的に移動
+  if (mapRef.value?.leafletObject) {
+    mapRef.value.leafletObject.setView([lat, lng], zoom.value)
+  }
 }
 </script>
 
